@@ -186,7 +186,8 @@ def wrangle_zillow(cached=False):
         # drop the last of the null values
         df = df.dropna()
         
-        
+#         add features
+        df = create_features(df)
         # Outliers
     
 #         df = remove_outliers(df, 'tax_value', 3)
@@ -323,6 +324,78 @@ def remove_outliers(df, col, multiplier):
     df = df[df[col] > lower_bound]
     df = df[df[col] < upper_bound]
     return df
+
+##########################################################################################
+
+# Feature Engineering
+
+##########################################################################################
+
+
+#----------------------------------------------------------------------------------------#
+###### Adding Features
+
+def create_features(df):
+    df['age'] = 2021 - df.year_built
+    df['age_bin'] = pd.cut(df.age, 
+                           bins = [0, 5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140],
+                           labels = [0, .066, .133, .20, .266, .333, .40, .466, .533, 
+                                     .60, .666, .733, .8, .866, .933])
+
+    # create taxrate variable
+    df['taxrate'] = df.tax_amount/df.tax_value*100
+
+    # create acres variable
+    df['acres'] = df.lot_sqft/43560
+
+    # bin acres
+    df['acres_bin'] = pd.cut(df.acres, bins = [0, .10, .15, .25, .5, 1, 5, 10, 20, 50, 200], 
+                       labels = [0, .1, .2, .3, .4, .5, .6, .7, .8, .9])
+
+    # square feet bin
+    df['sqft_bin'] = pd.cut(df.prop_sqft, 
+                            bins = [0, 800, 1000, 1250, 1500, 2000, 2500, 3000, 4000, 7000, 12000],
+                            labels = [0, .1, .2, .3, .4, .5, .6, .7, .8, .9]
+                       )
+
+    # dollar per square foot-structure
+    df['structure_dollar_per_sqft'] = df.struct_tax_value/df.prop_sqft
+
+
+    df['structure_dollar_sqft_bin'] = pd.cut(df.structure_dollar_per_sqft, 
+                                             bins = [0, 25, 50, 75, 100, 150, 200, 300, 500, 1000, 1500],
+                                             labels = [0, .1, .2, .3, .4, .5, .6, .7, .8, .9]
+                                            )
+
+
+    # dollar per square foot-land
+    df['land_dollar_per_sqft'] = df.land_tax_value/df.lot_sqft
+
+    df['lot_dollar_sqft_bin'] = pd.cut(df.land_dollar_per_sqft, bins = [0, 1, 5, 20, 50, 100, 250, 500, 1000, 1500, 2000],
+                                       labels = [0, .1, .2, .3, .4, .5, .6, .7, .8, .9]
+                                      )
+
+
+    # update datatypes of binned values to be float
+    df = df.astype({'sqft_bin': 'float64', 'acres_bin': 'float64', 'age_bin': 'float64',
+                    'structure_dollar_sqft_bin': 'float64', 'lot_dollar_sqft_bin': 'float64'})
+
+
+    # ratio of bathrooms to bedrooms
+    df['bath_bed_ratio'] = df.bathrooms/df.bedrooms
+
+    # 12447 is the ID for city of LA. 
+    # I confirmed through sampling and plotting, as well as looking up a few addresses.
+    df['cola'] = df['region_id_city'].apply(lambda x: 1 if x == 12447.0 else 0)
+
+    return df
+
+
+
+
+
+
+
 
 
 ##########################################################################################
