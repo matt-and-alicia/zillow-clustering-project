@@ -186,13 +186,14 @@ def wrangle_zillow(cached=False):
         # drop the last of the null values
         df = df.dropna()
         
-#         add features
-        df = create_features(df)
         # Outliers
+        df = remove_outliers(df, 'tax_value', 3)
+        df = remove_outliers(df, 'lot_sqft', 3)
+        
+        # Add features
+        df = create_features(df)
     
-#         df = remove_outliers(df, 'tax_value', 3)
-#         df = remove_outliers(df, 'lot_sqft', 3)
-#         df = remove_outliers(df, 'log_error', 1.5)
+
         
         df.to_csv('wrangled_zillow.csv')
     
@@ -283,6 +284,8 @@ def handle_missing_values(df, prop_to_drop_col, prop_to_drop_row):
 #     validate[[col]] = imputer.transform(validate[[col]])
 #     test[[col]] = imputer.transform(test[[col]])
 #     return train, validate, test
+
+
 
 def impute_mode(df, cols):
     ''' 
@@ -433,7 +436,7 @@ def train_validate_test_split(df, target, seed=42):
 
 
 
-def scale_my_data(train, validate, test, quant_vars):
+def train_validate_test_split(df, target, seed=42):
     scaler = MinMaxScaler()
     scaler.fit(train[quant_vars])
     
