@@ -192,7 +192,8 @@ def wrangle_zillow(cached=False):
         
         # Add features
         df = create_features(df)
-    
+        
+        df = df.dropna()
 
         
         df.to_csv('wrangled_zillow.csv')
@@ -339,7 +340,7 @@ def remove_outliers(df, col, multiplier):
 ###### Adding Features
 
 def create_features(df):
-    df['age'] = 2021 - df.year_built
+    df['age'] = 2017 - df.year_built
     df['age_bin'] = pd.cut(df.age, 
                            bins = [0, 5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140],
                            labels = [0, .066, .133, .20, .266, .333, .40, .466, .533, 
@@ -436,7 +437,7 @@ def train_validate_test_split(df, target, seed=42):
 
 
 
-def train_validate_test_split(df, target, seed=42):
+def train_validate_test_scale(train, validate, test, quant_vars):
     scaler = MinMaxScaler()
     scaler.fit(train[quant_vars])
     
