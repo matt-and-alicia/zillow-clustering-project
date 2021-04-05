@@ -323,8 +323,9 @@ Data features are separated into specific lists for use in the exploration proce
 
 #### latitude and longitude
 
-- Created 5 clusters:
-    - Clusters follow the general county lines with the exception of clusters in the East and the South adding an additional clusters.
+- Created 4 clusters:
+    - Clusters follow the general county lines with the exception of cluster in the East.
+    - County and location is a strong clustering feature 
 
 ***
 
