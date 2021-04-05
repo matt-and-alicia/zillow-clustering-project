@@ -441,6 +441,9 @@ def train_validate_test_split(df, target, seed=42):
 
 
 def train_validate_test_scale(train, validate, test, quant_vars):
+    ''' 
+    This function takes in the split data: train, validate, and test along with a list of quantitative variables, and returns scaled data for exploration and modeling
+    '''
     scaler = MinMaxScaler()
     scaler.fit(train[quant_vars])
     

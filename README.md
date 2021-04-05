@@ -170,8 +170,8 @@ This notebook consists of discoveries made and work that was done related to unc
 
 ### Acquisition and Preparation
 - Created **wrangle.py** file to handle the Aquisition and the Preparation of the Zillow Dataset
-- 
 
+#### Wrangle Functions for Acquisition and Preparation
 | Function Name | Purpose |
 | ----- | ----- | 
 | get_connection(db, user=user, host=host, password=password) | This function uses my info from my env file to create a connection url to access the Codeup db. |
@@ -215,23 +215,97 @@ This notebook consists of discoveries made and work that was done related to unc
 
 ## <a name="explore"></a>Data Exploration:
 [[Back to top](#top)]
-- wrangle.py 
+- Python files used for exploration:
+    - wrangle.py 
+    - explore.py
 
+#### Wrangle Functions for Exploration
 | Function Name | Definition |
 | ------------ | ------------- |
-| select_kbest | This function takes in a dataframe, the target feature as a string, and an interger (k) that must be less than or equal to the number of features and returns the (k) best features |
-| rfe | This function takes in a dataframe, the target feature as a string, and an interger (k) that must be less than or equal to the number of features and returns the best features by making a model, removing the weakest feature, then, making a new model, and removing the weakest feature, and so on. |
 | train_validate_test_split | This function takes in a dataframe, the target feature as a string, and a seed interger and returns split data: train, validate, test, X_train, y_train, X_validate, y_validate, X_test, y_test |
-| get_object_cols() | This function takes in a dataframe and identifies the columns that are object types and returns a list of those column names |
-| get_numeric_cols(X_train, object_cols) | This function takes in a dataframe and list of object column names and returns a list of all other columns names, the non-objects. |
-| min_max_scale(X_train, X_validate, X_test, numeric_cols) | This function takes in 3 dataframes with the same columns, a list of numeric column names (because the scaler can only work with numeric columns), and fits a min-max scaler to the first dataframe and transforms all 3 dataframes using that scaler. It returns 3 dataframes with the same column names and scaled values. 
+| train_validate_test_scale(train, validate, test, quant_vars) | This function takes in the split data: train, validate, and test along with a list of quantitative variables, and returns scaled data for exploration and modeling |
+
+### Pre-exploration:
+
+Data features are separated into specific lists for use in the exploration process:
+- binary_vars
+    - pool_cnt
+    - fireplace_flag
+    - la_cnty
+    - orange_cnty
+    - ventura_cnty
+    - cola
+    
+    
+- categorical_vars
+    - 'heating_system_type_id
+    - fips
+    - fireplace_cnt
+    - heating_system_desc
+    - region_id_city
+    - acres_bin
+    - sqft_bin
+    - structure_dollar_sqft_bin
+    
+    
+- quant_vars
+    - bathrooms
+    - bedrooms
+    - prop_sqft
+    - lot_sqft
+    - year_built
+    - struct_tax_value
+    - tax_value
+    - land_tax_value
+    - tax_amount
+    - structure_dollar_per_sqft
+    - bath_bed_ratio
 
 
-### Function1 used:
-- Outcome of the use of the function 
+- categorical_target
+    - log_error_class
+    
+    
+- continuous_target
+    - log_error
 
-### Function2 used:
-- Outcome of the use of the function 
+#### Explore Functions for Exploration
+| Function Name | Definition |
+| ------------ | ------------- |
+| explore_univariate(train, categorical_vars, quant_vars) | This function makes use of the explore_univariate_categorical and explore_univariate_quant functions. It takes in a dataframe and a categorical variable and returns a frequency table and barplot of the frequencies, for a given categorical variable, compute the frequency count and percent split and return a dataframe of those values along with the different classes, and takes in a dataframequantitative variable and returns descriptive stats table, histogram, and boxplot of the distributions. |
+| explore_bivariate(train, categorical_target, continuous_target, binary_vars, quant_vars) | This function makes use of explore_bivariate_categorical and explore_bivariate_quant functions. Each of those take in a continuous target and a binned/cut version of the target to have a categorical target. The categorical function takes in a binary independent variable and the quant function takes in a quantitative independent variable.  |
+|  |  |
+|  |  |
+
+### explore_univariate takeaways:
+- Features with a lot of outliers:
+    - bathrooms, prop_sqft, lot_sqft, struct_tax_value, tax_value, land_tax_value, tax_amount, and log_error
+- Bedrooms appear to be normally distributed
+- Latitude and longitude are good indicators of population density by location, it should not be scaled if being used by Geographical libraries
+
+### explore_bivariate takeaways:
+- Not one feature alone has a strong correlation with log_error
+    - log_error has the strongest correlation with prop_sqft than the rest of the features
+- log_error is highest in Orange county
+- log_error is roughly the same in Los Angeles and Ventura (slightly less in Ventura).
+- T-test resulted in rejecting the null hypothesis meaning we can assume that there is a difference in logerror between counties
+- Results show logerror is significantly different for properties in LA County vs Orange County vs Ventura County
+- slight upward trend in log error as square feet increases
+- homes between 1,000-4,000 sq ft have quite a bit of variance in log error
+- Grouping features with clustering should be a better route for predicting log_error
+
+### Manual exploration with scatter plots:
+- No fireplace_flag in LA county, few in Orange County, and a lot in Ventura County
+- Location will be a huge factor in clustering
+
+#### prop_sqft vs. log_error
+- logerror shows the highest amount of variance for LA and Orange county.
+- least amount of variance in Ventura county
+
+### Clustering with: 
+### **<span style="color:green">from</span> sklearn.cluster <span style="color:green">import</span>  KMeansKMeans**
+- 
+
 
 ***
 

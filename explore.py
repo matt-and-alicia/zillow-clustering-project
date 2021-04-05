@@ -18,6 +18,9 @@ from scipy import stats
 ### Univariate
 
 def explore_univariate(train, categorical_vars, quant_vars):
+    '''
+    Takes in a dataframe and a categorical variable and returns a frequency table and barplot of the frequencies, for a given categorical variable, compute the frequency count and percent split and return a dataframe of those values along with the different classes, and takes in a dataframequantitative variable and returns descriptive stats table, histogram, and boxplot of the distributions
+    '''
     for cat_var in categorical_vars:
         explore_univariate_categorical(train, cat_var)
         print('_________________________________________________________________')
