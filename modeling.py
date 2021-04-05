@@ -24,14 +24,21 @@ import seaborn as sns
 
 # Useful functions I used:
 
-
 def create_cluster(train, X, k):
-    # takes in train, X (dataframe with variables you want to cluster on) and k
-    # It scales the X, calcuates the clusters and return train (with clusters), the Scaled dataframe,
-    #the scaler and kmeans object and unscaled centroids as a dataframe
+    '''
+    takes in train, X df with variables to cluster on, and k.
+    It scales the X, calculates the clusters, 
+    returns train (with clusters), 
+    the Scaled dataframe,
+    the scaler,
+    kmeans object, 
+    and unscaled centroids as a dataframe
+    '''
+    #scale X
     scaler = StandardScaler(copy=True).fit(X)
     X_scaled = pd.DataFrame(scaler.transform(X), columns=X.columns.values).set_index([X.index.values])
-    kmeans = KMeans(n_clusters = k, random_state = 539)
+    #calculate clusters
+    kmeans = KMeans(n_clusters = k, random_state = 123)
     kmeans.fit(X_scaled)
     kmeans.predict(X_scaled)
     train['cluster'] = kmeans.predict(X_scaled)
@@ -41,8 +48,11 @@ def create_cluster(train, X, k):
 
 
 def create_scatter_plot(x,y,train,kmeans, X_scaled, scaler):
-    # takes in x and y (variable names as strings, along with returned objects from previous
-    # fuction create_cluster and creates a plot
+    '''
+    takes in x and y variable names as strings, 
+    along with returned objects from previous create_cluster function,
+    and creates a plot
+    '''
     plt.figure(figsize=(10, 6))
     sns.scatterplot(x = x, y = y, data = train, hue = 'cluster')
     centroids = pd.DataFrame(scaler.inverse_transform(kmeans.cluster_centers_), columns=X_scaled.columns)
