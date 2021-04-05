@@ -1,4 +1,6 @@
-# <a name="top"></a>TITLE - readme.md
+# <a name="top"></a>Zillow: Predicting the Error 
+## README.md
+
 ![](http://zillow.mediaroom.com/image/Zillow_Wordmark_Blue_RGB.jpg)
 
 by: Alicia Gonzalez and Matthew Dalton
@@ -218,8 +220,9 @@ This notebook consists of discoveries made and work that was done related to unc
 - Python files used for exploration:
     - wrangle.py 
     - explore.py
+    - modeling.py
 
-#### Wrangle Functions for Exploration
+### wrangle.py Functions for Exploration
 | Function Name | Definition |
 | ------------ | ------------- |
 | train_validate_test_split | This function takes in a dataframe, the target feature as a string, and a seed interger and returns split data: train, validate, test, X_train, y_train, X_validate, y_validate, X_test, y_test |
@@ -269,21 +272,25 @@ Data features are separated into specific lists for use in the exploration proce
 - continuous_target
     - log_error
 
-#### Explore Functions for Exploration
+### explore.py Functions for Exploration
 | Function Name | Definition |
 | ------------ | ------------- |
 | explore_univariate(train, categorical_vars, quant_vars) | This function makes use of the explore_univariate_categorical and explore_univariate_quant functions. It takes in a dataframe and a categorical variable and returns a frequency table and barplot of the frequencies, for a given categorical variable, compute the frequency count and percent split and return a dataframe of those values along with the different classes, and takes in a dataframequantitative variable and returns descriptive stats table, histogram, and boxplot of the distributions. |
 | explore_bivariate(train, categorical_target, continuous_target, binary_vars, quant_vars) | This function makes use of explore_bivariate_categorical and explore_bivariate_quant functions. Each of those take in a continuous target and a binned/cut version of the target to have a categorical target. The categorical function takes in a binary independent variable and the quant function takes in a quantitative independent variable.  |
-|  |  |
-|  |  |
 
-### explore_univariate takeaways:
+### modeling.py Functions for Exploration
+| Function Name | Definition |
+| ------------ | ------------- |
+| create_cluster(train, X, k) | This function takes in train, X (dataframe with variables you want to cluster on) and k, It scales the X, calcuates the clusters and return train (with clusters), the Scaled dataframe, the scaler and kmeans object and unscaled centroids as a dataframe |
+| create_scatter_plot(x,y,train,kmeans, X_scaled, scaler) |  This function takes in x and y (variable names as strings, along with returned objects from previous function create_cluster and creates a plot |
+
+### Takeaways explore_univariate:
 - Features with a lot of outliers:
     - bathrooms, prop_sqft, lot_sqft, struct_tax_value, tax_value, land_tax_value, tax_amount, and log_error
 - Bedrooms appear to be normally distributed
 - Latitude and longitude are good indicators of population density by location, it should not be scaled if being used by Geographical libraries
 
-### explore_bivariate takeaways:
+### Takeaways from explore_bivariate:
 - Not one feature alone has a strong correlation with log_error
     - log_error has the strongest correlation with prop_sqft than the rest of the features
 - log_error is highest in Orange county
@@ -293,6 +300,7 @@ Data features are separated into specific lists for use in the exploration proce
 - slight upward trend in log error as square feet increases
 - homes between 1,000-4,000 sq ft have quite a bit of variance in log error
 - Grouping features with clustering should be a better route for predicting log_error
+- Variance is lessens as the property value increases. 
 
 ### Manual exploration with scatter plots:
 - No fireplace_flag in LA county, few in Orange County, and a lot in Ventura County
@@ -304,8 +312,23 @@ Data features are separated into specific lists for use in the exploration proce
 
 ### Clustering with: 
 ### **<span style="color:green">from</span> sklearn.cluster <span style="color:green">import</span>  KMeansKMeans**
-- 
+#### tax_value and prop_sqft
+- Created 4 clusters
+    - low tax low sqft - low end suburbs - lower middle class
+    - mid tax low sqft - mid-high end suburbs / low-mid end city - mid-high upper middle class
+    - high tax low sqft - high end suburbs and city property - upper middle class+
+    - high sqft - large houses all tax groups
 
+#### acres and age
+- Created 4 clusters
+    - young property low-mid acrage - new residential suburban areas 
+    - mid century property low-mid acrage - mid century suburban and urban
+    - old property low-mid acrage - old  suburban and urban
+    - high acrage - all ages suburban-rural areas 
+
+#### latitude and longitude
+- Created 5 clusters:
+    - Clusters follow the general county lines with the exception of clusters in the East and the South adding an additional clusters.
 
 ***
 
