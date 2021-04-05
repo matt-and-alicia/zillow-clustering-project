@@ -340,6 +340,9 @@ def remove_outliers(df, col, multiplier):
 ###### Adding Features
 
 def create_features(df):
+    '''
+    Creates the folowing features: age, age_bin, taxrate, acres, acres_bin, sqft_bin, structure_dollar_per_sqft, structure_dollar_sqft_bin, land_dollar_per_sqft, lot_dollar_sqft_bin, bath_bed_ratio, and cola. 
+    '''
     df['age'] = 2017 - df.year_built
     df['age_bin'] = pd.cut(df.age, 
                            bins = [0, 5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140],
