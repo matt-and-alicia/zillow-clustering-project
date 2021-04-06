@@ -171,14 +171,14 @@ def wrangle_zillow(cached=False):
         df = pd.concat([df, dummy_df], axis=1)    # clean up column names
         
         # list of columns not being used
-        dropcols = ['id', 'buildingqualitytypeid', 'finishedsquarefeet12', 'calculatedbathnbr', 'fullbathcnt', 'propertycountylandusecode', 'propertylandusetypeid', 'propertyzoningdesc', 'censustractandblock', 'rawcensustractandblock', 'regionidcounty', 'regionidzip', 'roomcnt', 'unitcnt', 'assessmentyear', 'transactiondate']
+        dropcols = ['id', 'buildingqualitytypeid', 'finishedsquarefeet12', 'calculatedbathnbr', 'fullbathcnt', 'propertycountylandusecode', 'propertylandusetypeid', 'propertyzoningdesc', 'censustractandblock', 'rawcensustractandblock', 'regionidcounty', 'regionidzip', 'roomcnt', 'unitcnt', 'assessmentyear', 'transactiondate', 'heating_system_desc']
         df = df.drop(columns=dropcols)
     
         # create categorical log error column into 5 sections
         df['log_error_class'] = pd.qcut(df.logerror, q=4, labels=['l1', 'l2', 'l3', 'l4'])
         
         # rename columns
-        df.columns = ['heating_system_type_id', 'parcelid', 'bathrooms', 'bedrooms', 'prop_sqft', 'fips', 'fireplace_cnt', 'latitude', 'longitude', 'lot_sqft', 'pool_cnt', 'region_id_city', 'year_built', 'fireplace_flag', 'struct_tax_value', 'tax_value', 'land_tax_value', 'tax_amount', 'log_error', 'heating_system_desc', 'la_cnty', 'orange_cnty', 'ventura_cnty', 'log_error_class']
+        df.columns = ['heating_system_type_id', 'parcelid', 'bathrooms', 'bedrooms', 'prop_sqft', 'fips', 'fireplace_cnt', 'latitude', 'longitude', 'lot_sqft', 'pool_cnt', 'region_id_city', 'year_built', 'fireplace_flag', 'struct_tax_value', 'tax_value', 'land_tax_value', 'tax_amount', 'log_error', 'la_cnty', 'orange_cnty', 'ventura_cnty', 'log_error_class']
         
         # Set index
         df.set_index('parcelid', inplace=True)
