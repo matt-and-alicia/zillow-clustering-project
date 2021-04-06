@@ -330,14 +330,6 @@ Data features are separated into specific lists for use in the exploration proce
 ### Clustering with: 
 #### **<span style="color:green">from</span> sklearn.cluster <span style="color:green">import</span>  KMeansKMeans**
 
-#### tax_value and prop_sqft
-
-- Created 4 clusters
-    - low tax low sqft - low end suburbs - lower middle class
-    - mid tax low sqft - mid-high end suburbs / low-mid end city - mid-high upper middle class
-    - high tax low sqft - high end suburbs and city property - upper middle class+
-    - high sqft - large houses all tax groups
-
 #### acres and age
 
 - Created 4 clusters
@@ -352,6 +344,14 @@ Data features are separated into specific lists for use in the exploration proce
     - Clusters follow the general county lines with the exception of cluster in the East.
     - County and location is a strong clustering feature 
 
+#### tax_value and prop_sqft
+
+- Created 4 clusters
+    - low tax low sqft - low end suburbs - lower middle class
+    - mid tax low sqft - mid-high end suburbs / low-mid end city - mid-high upper middle class
+    - high tax low sqft - high end suburbs and city property - upper middle class+
+    - high sqft - large houses all tax groups
+    
 ***
 
 ## <a name="stats"></a>Statistical Analysis
@@ -371,8 +371,8 @@ A one-way ANOVA is used for three or more groups of data, to gain information ab
 - alpha = 1 - confidence, therefore alpha is 0.05
 
 #### Results:
-- f = **16.4687**
-- p-value = **1.0865 x 10<sup>-10</sup>**
+- f = **10.3375**
+- p-value = **8.5052 x 10<sup>-7</sup>**
 - We reject the null hypothesis that log_error is the same across all 4 clusters
 - We move forward with the alternative hypothesis that The log_error is different in the clusters
 
@@ -401,17 +401,18 @@ A one-way ANOVA is used for three or more groups of data, to gain information ab
 - I established a 95% confidence level
 - alpha = 1 - confidence, therefore alpha is 0.05
 
+
 #### Results:
 | Cluster | t-statistic | p-value | Reject Null? |
-| ------- | :-------: | :-------: | :-------: |
-| Cluster1 | -6.9613 | 3.6034 x 10<sup>-12</sup> | Yes |
-| Cluster2 | 1.9483 | 0.05142 | No |
-| Cluster3 | -1.8029 | 0.0714 | No |
-| Cluster4 | 2.5875 | 0.0097 | Yes |
+| ------- | -------: | -------: | :-------: |
+| Cluster1 | -2.4378 | 0.0148 | Yes |
+| Cluster2 | -4.4752 | 7.7006 x 10<sup>-6</sup> | Yes |
+| Cluster3 | 2.7658 | 0.0057 | Yes |
+| Cluster4 | 1.2522 | 0.2106 | No |
 
 #### Summary:
-- Clusters 1 and 4 reject the null hypothesis and are good candidates for modeling
-- Clusters 2 amd 3 failed to reject the null hypothesis and are not suitable for modeling.  
+- Clusters 1, 2, 3 reject the null hypothesis and are good candidates for modeling
+- Cluster 4 failed to reject the null hypothesis and are not suitable for modeling.  
 
 ***
 
