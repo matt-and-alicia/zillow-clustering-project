@@ -487,16 +487,18 @@ Model 2 code:
 
 ### Use Table below as a template for all Modeling results for easy comparison:
 
-| Model | Training/In Sample RMSE | Validation/Out of Sample RMSE | R<sup>2</sup> Value |
-| ---- | ----| ---- | ---- |
-| Baseline | 271194.48 | 272149.78 | -2.1456 x 10<sup>-5</sup> |
-| Linear Regression | 217503.9051 | 220468.9564 | 0.3437 |
-| Tweedie Regressor (GLM) | 217516.6069 | 220563.6468 | 0.3432 |
-| Lasso Lars | 217521.8752 | 220536.3882 | 0.3433 |
-| Polynomial Regression | 211227.5585 | 214109.6968 | 0.3810 |
+| Model | Validation/Out of Sample RMSE | R<sup>2</sup> Value |
+| ---- | ----| ---- |
+| Baseline | 0.167366 | 2.2204 x 10<sup>-16</sup> |
+| Linear Regression (OLS) | 0.166731 | 2.1433 x 10<sup>-3</sup> |  
+| Tweedie Regressor (GLM) | 0.155186 | 9.4673 x 10<sup>-4</sup>|  
+| Lasso Lars | 0.166731 | 2.2204 x 10<sup>-16</sup> |  
+| Quadratic Regression | 0.027786 | 2.4659 x 10<sup>-3</sup> |  
 
-- Why did you choose this model?
-- 
+
+- Quadratic Regression model performed the best
+     - The RMSE of the validation/out of sample had the largest reduction from the baseline.
+     - Also, this model has the highest R<sup>2</sup> value
 
 ## Testing the Model
 ```json
@@ -505,7 +507,7 @@ Model Testing Code...
 }
 ```
 - Model Testing Results
-     - Out-of-Sample Performance:  **Results**
+     - Out-of-Sample Performance:  **0.160752**
 
 
 ***
