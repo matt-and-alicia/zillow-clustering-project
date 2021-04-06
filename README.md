@@ -411,9 +411,8 @@ A one-way ANOVA is used for three or more groups of data, to gain information ab
 | Cluster4 | 1.2522 | 0.2106 | No |
 
 #### Summary:
-- Clusters 1, 2, 3 reject the null hypothesis and are good candidates for modeling
-- Cluster 4 failed to reject the null hypothesis and are not suitable for modeling.  
-
+- Clusters 0, 1, and 2 reject the null hypothesis and are good candidates for modeling
+- Cluster 3 failed to reject the null hypothesis and are not suitable for modeling.
 ***
 
 ## <a name="model"></a>Modeling:
