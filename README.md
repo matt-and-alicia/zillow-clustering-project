@@ -405,10 +405,10 @@ A one-way ANOVA is used for three or more groups of data, to gain information ab
 #### Results:
 | Cluster | t-statistic | p-value | Reject Null? |
 | ------- | -------: | -------: | :-------: |
-| Cluster1 | -2.4378 | 0.0148 | Yes |
-| Cluster2 | -4.4752 | 7.7006 x 10<sup>-6</sup> | Yes |
-| Cluster3 | 2.7658 | 0.0057 | Yes |
-| Cluster4 | 1.2522 | 0.2106 | No |
+| Cluster0 | -2.4378 | 0.0148 | Yes |
+| Cluster1 | -4.4752 | 7.7006 x 10<sup>-6</sup> | Yes |
+| Cluster2 | 2.7658 | 0.0057 | Yes |
+| Cluster3 | 1.2522 | 0.2106 | No |
 
 #### Summary:
 - Clusters 0, 1, and 2 reject the null hypothesis and are good candidates for modeling
