@@ -35,7 +35,7 @@ def create_cluster(train, X, k):
     and unscaled centroids as a dataframe
     '''
     #scale X
-    scaler = StandardScaler(copy=True).fit(X)
+    scaler = MinMaxScaler(copy=True).fit(X)
     X_scaled = pd.DataFrame(scaler.transform(X), columns=X.columns.values).set_index([X.index.values])
     #calculate clusters
     kmeans = KMeans(n_clusters = k, random_state = 123)
