@@ -40,7 +40,7 @@ That is why Zillow's dataset includes the log error information, which is the di
 ## <a name="planning"></a>Project Planning: 
 [[Back to top](#top)]
 
-### Projet Outline:
+### Project Outline:
 
 For this project we are working with the Zillow dataset using the 2017 properties and predictions data for single unit / single family homes.
 
