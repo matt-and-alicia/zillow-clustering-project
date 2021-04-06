@@ -109,12 +109,37 @@ This notebook consists of discoveries made and work that was done related to unc
 [[Back to top](#top)]
 
 ### Explore:
-- What are your key findings from explore?
+- log_error doesn't correlate very well with anything
+    - correlation with prop_sqft is the highest
+- log_error is highest in Orange county
+- T-test resulted in rejecting the null hypothesis meaning we can assume that there is a difference in log_error between counties
+- Results show log_error is significantly different for properties in LA County vs Orange County vs Ventura County
+- Kmeans:
+    - prop_sqft and tax_value
+    - 
 
 
 ### Stats
-- What are your key findings from stats?
+We ran 1 - ANOVA Test and 4 - One-Sample, Two-Tailed, T-test
 
+Both Statistics tests were run at a 95% confidence interval
+
+- ANOVA results:
+    - f = 16.4687
+    - p-value = 1.0865 x 10-10
+    - We reject the null hypothesis that log_error is the same across all 4 clusters
+    - We move forward with the alternative hypothesis that The log_error is different in the clusters
+
+- T-test: 
+
+| Cluster | t-statistic | p-value | Reject Null? |
+| ------- | :-------: | :-------: | :-------: |
+| Cluster1 | -6.9613 | 3.6034 x 10<sup>-12</sup> | Yes |
+| Cluster2 | 1.9483 | 0.05142 | No |
+| Cluster3 | -1.8029 | 0.0714 | No |
+| Cluster4 | 2.5875 | 0.0097 | Yes |
+    
+    
 ### Modeling:
 - Model results?
 
@@ -332,65 +357,61 @@ Data features are separated into specific lists for use in the exploration proce
 ## <a name="stats"></a>Statistical Analysis
 [[Back to top](#top)]
 
-### Stats Test 1:
- - What is the test?
- - Why use this test?
- - What is being compared?
+### Stats Test 1: ANOVA Test: One Way
+Analysis of variance, or ANOVA, is a statistical method that separates observed variance data into different components to use for additional tests. 
+
+A one-way ANOVA is used for three or more groups of data, to gain information about the relationship between the dependent and independent variables: in this case our clusters vs. the log_error, respectively.
 
 #### Hypothesis:
-- The null hypothesis (H<sub>0</sub>) is... 
-- The alternate hypothesis (H<sub>1</sub>) is ...
-
+- The null hypothesis (H<sub>0</sub>) is there is no difference in logerror between the 4 clusters.
+- The alternate hypothesis (H<sub>1</sub>) is the log_error is different between the 4 clusters.
 
 #### Confidence level and alpha value:
 - I established a 95% confidence level
 - alpha = 1 - confidence, therefore alpha is 0.05
 
 #### Results:
- - Results of statistical tests
+- f = **16.4687**
+- p-value = **1.0865 x 10<sup>-10</sup>**
+- We reject the null hypothesis that log_error is the same across all 4 clusters
+- We move forward with the alternative hypothesis that The log_error is different in the clusters
 
- - Summary:
-     - In depth take-a-ways from the results
+#### Summary:
+- This indicates that the chosen features are a good start for modeling.
 
-### Stats Test 2 
- - What is the test?
- - Why use this test?
- - What is being compared?
+
+### Stats Test 2: T-Test: One Sample
+- A T-test allows me to compare a categorical and a continuous variable by comparing the mean of the continuous variable by subgroups based on the categorical variable
+- The t-test returns the t-statistic and the p-value:
+    - t-statistic: 
+        - Is the ratio of the departure of the estimated value of a parameter from its hypothesized value to its standard error. It is used in hypothesis testing via Student's t-test. 
+        - It is used in a t-test to determine if you should support or reject the null hypothesis
+        - t-statistic of 0 = H<sub>0</sub>
+    -  - the p-value:
+        - The probability of obtaining test results at least as extreme as the results actually observed, under the assumption that the null hypothesis is correct
+- We wanted to compare the individual clusters to the total population. 
+    - Cluster1 to the mean of ALL clusters
+    - Cluster2 to the mean of ALL clusters, etc.
 
 #### Hypothesis:
-- The null hypothesis (H<sub>0</sub>) is... 
-- The alternate hypothesis (H<sub>1</sub>) is ...
-
+- The null hypothesis (H<sub>0</sub>) is no difference in the means of the clusters' log_errors. 
+- The alternate hypothesis (H<sub>1</sub>) is a significant difference in the means of the clusters' log_errors. 
 
 #### Confidence level and alpha value:
 - I established a 95% confidence level
 - alpha = 1 - confidence, therefore alpha is 0.05
 
 #### Results:
- - Results of statistical tests
+| Cluster | t-statistic | p-value | Reject Null? |
+| ------- | :-------: | :-------: | :-------: |
+| Cluster1 | -6.9613 | 3.6034 x 10<sup>-12</sup> | Yes |
+| Cluster2 | 1.9483 | 0.05142 | No |
+| Cluster3 | -1.8029 | 0.0714 | No |
+| Cluster4 | 2.5875 | 0.0097 | Yes |
 
- - Summary:
-     - In depth take-a-ways from the results
-
-### Stats Test 3
- - What is the test?
- - Why use this test?
- - What is being compared?
-
-#### Hypothesis:
-- The null hypothesis (H<sub>0</sub>) is... 
-- The alternate hypothesis (H<sub>1</sub>) is ...
-
-
-#### Confidence level and alpha value:
-- I established a 95% confidence level
-- alpha = 1 - confidence, therefore alpha is 0.05
-
-#### Results:
- - Results of statistical tests
-
- - Summary:
-     - In depth take-a-ways from the results
+#### Summary:
+- Clusters 1 and 4 reject the null hypothesis and are good candidates for modeling
+- Clusters 2 amd 3 failed to reject the null hypothesis and are not suitable for modeling.  
 
 ***
 
