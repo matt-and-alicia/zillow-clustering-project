@@ -171,7 +171,7 @@ def wrangle_zillow(cached=False):
         df = pd.concat([df, dummy_df], axis=1)    # clean up column names
         
         # list of columns not being used
-        dropcols = ['id', 'buildingqualitytypeid', 'finishedsquarefeet12', 'calculatedbathnbr', 'fullbathcnt', 'propertycountylandusecode', 'propertylandusetypeid', 'propertyzoningdesc', 'censustractandblock', 'rawcensustractandblock', 'regionidcounty', 'regionidzip', 'roomcnt', 'unitcnt', 'assessmentyear', 'transactiondate', 'heating_system_desc']
+        dropcols = ['id', 'buildingqualitytypeid', 'finishedsquarefeet12', 'calculatedbathnbr', 'fullbathcnt', 'propertycountylandusecode', 'propertylandusetypeid', 'propertyzoningdesc', 'censustractandblock', 'rawcensustractandblock', 'regionidcounty', 'regionidzip', 'roomcnt', 'unitcnt', 'assessmentyear', 'transactiondate', 'heatingorsystemdesc']
         df = df.drop(columns=dropcols)
     
         # create categorical log error column into 5 sections
