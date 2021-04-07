@@ -1,5 +1,19 @@
 # <a name="top"></a>Zillow: Predicting the Error 
 ## README.md
+<p>
+  <a href="https://github.com/mdalton87" target="_blank">
+    <img alt="Matthew" src="https://img.shields.io/github/followers/mdalton87?label=matthew Dalton&style=social" />
+  </a>
+  <a href="https://github.com/orgs/matt-and-alicia/people/aliciag92" target="_blank">
+    <img alt="Alicia" src="https://img.shields.io/github/followers/aliciag92?label=Alicia_Gonzalez&style=social" />
+  </a>
+  <a href="https://github.com/matt-and-alicia/zillow-clustering-project" target="_blank">
+    <img alt="Forks" src="https://img.shields.io/github/forks/matt-and-alicia/zillow-clustering-project?style=social" />
+  </a>
+  <a href="https://github.com/matt-and-alicia/zillow-clustering-project/commits/main" target="_blank">
+    <img alt="Last: Push" src="https://img.shields.io/github/last-commit/matt-and-alicia/zillow-clustering-project" />
+  </a>
+</p>
 
 ![](http://zillow.mediaroom.com/image/Zillow_Wordmark_Blue_RGB.jpg)
 
