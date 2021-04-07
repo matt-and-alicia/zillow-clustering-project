@@ -8,7 +8,7 @@ by: Alicia Gonzalez and Matthew Dalton
   <a href="https://github.com/mdalton87" target="_blank">
     <img alt="Matthew" src="https://img.shields.io/github/followers/mdalton87?label=Follow_Matt&style=social" />
   </a>
-  <a href="https://github.com/orgs/matt-and-alicia/people/aliciag92" target="_blank">
+  <a href="https://github.com/aliciag92" target="_blank">
     <img alt="Alicia" src="https://img.shields.io/github/followers/aliciag92?label=Follow_Alicia&style=social" />
   </a>
   <a href="https://github.com/matt-and-alicia/zillow-clustering-project" target="_blank">
