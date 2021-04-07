@@ -100,7 +100,9 @@ This notebook consists of discoveries made and work that was done related to unc
 
 ### Nice to haves (With more time):
 
-- 
+- Would like to explore 3-D clustering by adding latitude or acres
+- More time to explore less common features like a/c unit type and fireplaces
+- Would like to get more time to fill out the missing data so that there are even more data points to work with
 
 
 ***
@@ -115,8 +117,9 @@ This notebook consists of discoveries made and work that was done related to unc
 - T-test resulted in rejecting the null hypothesis meaning we can assume that there is a difference in log_error between counties
 - Results show log_error is significantly different for properties in LA County vs Orange County vs Ventura County
 - Kmeans:
+    - acres and age
+    - latitude and longitude
     - prop_sqft and tax_value
-    - 
 
 
 ### Stats
@@ -125,24 +128,38 @@ We ran 1 - ANOVA Test and 4 - One-Sample, Two-Tailed, T-test
 Both Statistics tests were run at a 95% confidence interval
 
 - ANOVA results:
-    - f = 16.4687
-    - p-value = 1.0865 x 10-10
+    - f = 10.3375
+    - p-value = 8.5052 x 10-7
     - We reject the null hypothesis that log_error is the same across all 4 clusters
     - We move forward with the alternative hypothesis that The log_error is different in the clusters
 
 - T-test: 
+    - Clusters 0, 1, and 2 reject the null hypothesis and are good candidates for modeling
+    - Cluster 3 failed to reject the null hypothesis and are not suitable for modeling.
 
 | Cluster | t-statistic | p-value | Reject Null? |
 | ------- | :-------: | :-------: | :-------: |
-| Cluster1 | -6.9613 | 3.6034 x 10<sup>-12</sup> | Yes |
-| Cluster2 | 1.9483 | 0.05142 | No |
-| Cluster3 | -1.8029 | 0.0714 | No |
-| Cluster4 | 2.5875 | 0.0097 | Yes |
-    
+| Cluster0 | -2.4378 | 0.0148 | Yes |
+| Cluster1 | -4.4752 | 7.7006 x 10<sup>-6</sup> | Yes |
+| Cluster2 | 2.7658 | 0.0057 | Yes |
+| Cluster3 | 1.2522 | 0.2106 | No |
+
     
 ### Modeling:
-- Model results?
+| Model | Validation/Out of Sample RMSE | R<sup>2</sup> Value |
+| ---- | :----:| ----: |
+| Baseline | 0.167366 | 2.2204 x 10<sup>-16</sup> |
+| Linear Regression (OLS) | 0.166731 | 2.1433 x 10<sup>-3</sup> |  
+| Tweedie Regressor (GLM) | 0.155186 | 9.4673 x 10<sup>-4</sup>|  
+| Lasso Lars | 0.166731 | 2.2204 x 10<sup>-16</sup> |  
+| Quadratic Regression | 0.027786 | 2.4659 x 10<sup>-3</sup> |  
 
+- Quadratic Regression model performed the best
+     - The RMSE of the validation/out of sample had the largest reduction from the baseline.
+     - Also, this model has the highest R<sup>2</sup> value
+- Quadratic Testing:
+    - RMSE = 0.160752	
+    - R<sup>2</sup> value = -3.9361  x 10<sup>-4</sup>
 
 ***
 
@@ -266,7 +283,7 @@ Data features are separated into specific lists for use in the exploration proce
     
     
 - categorical_vars
-    - 'heating_system_type_id
+    - heating_system_type_id
     - fips
     - fireplace_cnt
     - heating_system_desc
@@ -347,10 +364,10 @@ Data features are separated into specific lists for use in the exploration proce
 #### tax_value and prop_sqft
 
 - Created 4 clusters
-    - low tax low sqft - low end suburbs - lower middle class
-    - mid tax low sqft - mid-high end suburbs / low-mid end city - mid-high upper middle class
-    - high tax low sqft - high end suburbs and city property - upper middle class+
-    - high sqft - large houses all tax groups
+    - low tax, low sqft - low end suburbs - lower middle class
+    - mid tax, low sqft - mid-high end suburbs / low-mid end city - mid-high upper middle class
+    - high tax, low sqft - high end suburbs and city property - upper middle class+
+    - high sqft - large houses in all tax groups
     
 ***
 
@@ -358,9 +375,17 @@ Data features are separated into specific lists for use in the exploration proce
 [[Back to top](#top)]
 
 ### Stats Test 1: ANOVA Test: One Way
+
 Analysis of variance, or ANOVA, is a statistical method that separates observed variance data into different components to use for additional tests. 
 
 A one-way ANOVA is used for three or more groups of data, to gain information about the relationship between the dependent and independent variables: in this case our clusters vs. the log_error, respectively.
+
+To run the ANOVA test in Python use the following import: \
+<span style="color:green">from</span> scipy.stats <span style="color:green">import</span> f_oneway
+
+- f_oneway, in this case, takes in the individual clusters and returns the f-statistic, f, and the p_value, p:
+    - the f-statistic is simply a ratio of two variances. 
+    - The p_vlaue is the probability of obtaining test results at least as extreme as the results actually observed, under the assumption that the null hypothesis is correct
 
 #### Hypothesis:
 - The null hypothesis (H<sub>0</sub>) is there is no difference in logerror between the 4 clusters.
@@ -380,7 +405,7 @@ A one-way ANOVA is used for three or more groups of data, to gain information ab
 - This indicates that the chosen features are a good start for modeling.
 
 
-### Stats Test 2: T-Test: One Sample
+### Stats Test 2: T-Test: One Sample, Two Tailed
 - A T-test allows me to compare a categorical and a continuous variable by comparing the mean of the continuous variable by subgroups based on the categorical variable
 - The t-test returns the t-statistic and the p-value:
     - t-statistic: 
@@ -406,7 +431,7 @@ A one-way ANOVA is used for three or more groups of data, to gain information ab
 | Cluster | t-statistic | p-value | Reject Null? |
 | ------- | -------: | -------: | :-------: |
 | Cluster0 | -2.4378 | 0.0148 | Yes |
-| Cluster1 | -4.4752 | 7.7006 x 10<sup>-6</sup> | Yes |
+| Cluster1 | -4.4752 | 7.7 x 10<sup>-6</sup> | Yes |
 | Cluster2 | 2.7658 | 0.0057 | Yes |
 | Cluster3 | 1.2522 | 0.2106 | No |
 
@@ -418,70 +443,214 @@ A one-way ANOVA is used for three or more groups of data, to gain information ab
 ## <a name="model"></a>Modeling:
 [[Back to top](#top)]
 
-Summary of modeling choices...
+### Model Preparation:
+- Created dummy columns of the clusters in the train, validate and test dataframes
+- Dropped the cluster that did not pass the t-test, cluster_3
+- Setup X_train, y_train, X_validate, y_validate, X_test, and y_test 
 
 ### Baseline
-
-
-- What is the first step?
     
 ```json
 {
-Input code here if you want...
-}
-```
-- Next Step:
+#Convert y_train and y_validate to dataframes to append the new columns with predicted values 
+y_train = pd.DataFrame(y_train)
+y_validate = pd.DataFrame(y_validate)
 
-```json
-{
-Code...
+#Predict log_error_pred_mean
+log_error_pred_mean = y_train['log_error'].mean()
+y_train['log_error_pred_mean'] = log_error_pred_mean
+y_validate['log_error_pred_mean'] = log_error_pred_mean
+
+#Compute log_error_pred_median
+log_error_pred_median = y_train['log_error'].median()
+y_train['log_error_pred_median'] = log_error_pred_median
+y_validate['log_error_pred_median'] = log_error_pred_median
+
+#Evaluate the baseline model using the mean
+#RMSE of log_error_pred_mean
+rmse_train = mean_squared_error(y_train.log_error, y_train.log_error_pred_mean) ** .5
+rmse_validate = mean_squared_error(y_validate.log_error, y_validate.log_error_pred_mean) ** .5
+
+print("RMSE using Mean\nTrain/In-Sample: ", round(rmse_train, 4), 
+      "\nValidate/Out-of-Sample: ", round(rmse_validate, 4))
+
+#Evaluate the baseline model using the median
+#RMSE of log_error_pred_mean
+rmse_train = mean_squared_error(y_train.log_error, y_train.log_error_pred_median) ** .5
+rmse_validate = mean_squared_error(y_validate.log_error, y_validate.log_error_pred_median) ** .5
+
+print("RMSE using Median\nTrain/In-Sample: ", round(rmse_train, 4), 
+      "\nValidate/Out-of-Sample: ", round(rmse_validate, 4))
 }
 ```
 
 - Baseline Results: 
-    - What are the numbers we are trying to beat with our model.
-        
+    - RMSE using Median
+    - Train/In-Sample:  0.1557 
+    - Validate/Out-of-Sample:  0.1674        
+
+- Selected features to input into models:
+    - features = ['prop_sqft','tax_value','acres','age','latitude','bathrooms']
+
 ***
 
 ### Models and R<sup>2</sup> Values:
-- Will run the following models:
-    - Model 1
-        - brief summary of what the model does.
-    - Model 2 
-        - brief summary of what the model does.
-    - etc.
+- Will run the following regression models:
+    - Linear Regression
+    - LassoLars Model
+    - Tweedie Regressor (GLM)
+    - Quadratic Regression
+    
 
 - Other indicators of model performance with breif defiition and why it's important:
     - R<sup>2</sup> Value is the coefficient of determination, pronounced "R squared", is the proportion of the variance in the dependent variable that is predictable from the independent variable. 
     - Essentially it is a statistical measure of how close the data are to the fitted regression line.
-#### Model 1:
+    
+    
+#### Model 1: Linear Regression (OLS)
 
 ```json 
 {
-Model 1 code:
+# create the model object
+lm = LinearRegression(normalize=True)
+
+# fit the model to our training data
+lm.fit(X_train[features], y_train.log_error)
+
+# predict train
+y_train['log_error_pred_lm'] = lm.predict(X_train[features])
+
+# evaluate: rmse
+rmse_train = mean_squared_error(y_train.log_error, y_train.log_error_pred_lm) ** (1/2)
+
+
+# predict validate
+y_validate['log_error_pred_lm'] = lm.predict(X_validate[features])
+
+# evaluate: rmse
+rmse_validate = mean_squared_error(y_validate.log_error, y_validate.log_error_pred_lm) ** (1/2)
+
+print("RMSE for OLS using LinearRegression\nTraining/In-Sample: ", rmse_train, 
+      "\nValidation/Out-of-Sample: ", rmse_validate)
 }
 ```
 - Model 1 results:
-    - Metric for Model 1:
-        - Training/In-Sample:  **Results**
-        - Validation/Out-of-Sample:  **Results**
-    - Other metrics: (R<sup>2</sup> Value = )
+    - RMSE for OLS using LinearRegression
+        - Training/In-Sample:  0.1552
+        - Validation/Out-of-Sample:  0.1667
+    - R<sup>2</sup> Value = 0.00214
 
 
-### Model 2 :
+### Model 2 : Lasso Lars Model
 
 ```json 
 {
-Model 2 code:
+# create the model object
+lars = LassoLars(alpha=1)
+
+# fit the model to our training data
+lars.fit(X_train[features], y_train.log_error)
+
+
+# predict train
+y_train['log_error_pred_lars'] = lars.predict(X_train[features])
+
+# evaluate: rmse
+rmse_train = mean_squared_error(y_train.log_error, y_train.log_error_pred_lm) ** (1/2)
+
+
+# predict validate
+y_validate['log_error_pred_lars'] = lars.predict(X_validate[features])
+
+# evaluate: rmse
+rmse_validate = mean_squared_error(y_validate.log_error, y_validate.log_error_pred_lm) ** (1/2)
+
+print("RMSE for Lasso + Lars\nTraining/In-Sample: ", rmse_train, 
+      "\nValidation/Out-of-Sample: ", rmse_validate)
 }
 ```
 - Model 2 results:
-    - Metric for Model 1:
-        - Training/In-Sample:  **Results**
-        - Validation/Out-of-Sample:  **Results**
-    - Other metrics: (R<sup>2</sup> Value = )
+    - RMSE for Lasso + Lars
+        - Training/In-Sample:  0.1552 
+        - Validation/Out-of-Sample:  0.1667
+    - R<sup>2</sup> Value = 2.2204 x 10<sup>-16</sup>
 
-### etc.
+### Model 3 : Tweedie Regressor (GLM)
+
+```json
+{
+# create the model object
+glm = TweedieRegressor(alpha=0)
+
+# fit the model to our training data. 
+glm.fit(X_train[features], y_train.log_error)
+
+
+# predict train
+y_train['log_error_pred_glm'] = glm.predict(X_train[features])
+
+# evaluate: rmse
+rmse_train = mean_squared_error(y_train.log_error, y_train.log_error_pred_glm) ** (1/2)
+
+
+# predict validate
+y_validate['log_error_pred_glm'] = glm.predict(X_validate[features])
+
+# evaluate: rmse
+rmse_validate = mean_squared_error(y_train.log_error, y_train.log_error_pred_glm) ** (1/2)
+
+print("RMSE for GLM using Tweedie, power=1 & alpha=0\nTraining/In-Sample: ", rmse_train, 
+      "\nValidation/Out-of-Sample: ", rmse_validate)
+}
+```
+- Model 3 results:
+    - RMSE for GLM using Tweedie, power=1 & alpha=0
+        - Training/In-Sample:  0.1552
+        - Validation/Out-of-Sample:  0.1552
+    - R<sup>2</sup> Value = 9.4674 x 10<sup>-4</sup>
+
+### Model 4: Quadratic Regression Model
+```json
+{
+## Polynomial Features ##
+# make the polynomial features to get a new set of features
+pf = PolynomialFeatures(degree=2)
+
+# fit and transform X_train
+X_train_degree2 = pf.fit_transform(X_train[features])
+
+# transform X_validate & X_test
+X_validate_degree2 = pf.transform(X_validate[features])
+X_test_degree2 =  pf.transform(X_test[features])
+
+## LinearRegression ##
+# create the model object
+lm2 = LinearRegression(normalize=True)
+
+# fit the model to our training data
+lm2.fit(X_train_degree2, y_train.log_error)
+
+# predict train
+y_train['log_error_pred_lm2'] = lm2.predict(X_train_degree2)
+
+# evaluate: rmse
+rmse_train = mean_squared_error(y_train.log_error, y_train.log_error_pred_lm2) ** (1/2)
+
+# predict validate
+y_validate['log_error_pred_lm2'] = lm2.predict(X_validate_degree2)
+
+# evaluate: rmse
+rmse_validate = mean_squared_error(y_validate.log_error, y_validate.log_error_pred_lm2)
+
+print("RMSE for Polynomial Model, degrees=2\nTraining/In-Sample: ", rmse_train, 
+      "\nValidation/Out-of-Sample: ", rmse_validate)
+}
+```
+- Model 4 results:
+    - RMSE for Polynomial Model, degrees=2
+        - Training/In-Sample:  0.1550
+        - Validation/Out-of-Sample:  0.0278
+    - R<sup>2</sup> Value = 2.4659 x 10<sup>-3</sup>
 
 ## Selecting the Best Model:
 
@@ -503,22 +672,36 @@ Model 2 code:
 ## Testing the Model
 ```json
 {
-Model Testing Code...
+y_test = pd.DataFrame(y_test)
+
+# predict on test
+y_test['log_error_pred_lm2'] = lm2.predict(X_test_degree2)
+
+# evaluate: rmse
+rmse_test = mean_squared_error(y_test.log_error, y_test.log_error_pred_lm2) ** (1/2)
+
+print("RMSE for Quadratic Model\nOut-of-Sample Performance: ", round(rmse_test, 4))
 }
 ```
 - Model Testing Results
      - Out-of-Sample Performance:  **0.160752**
-
+     - R <sup>2</sup> value = -3.9362 x 10<sup>-4</sup>
 
 ***
 
 ## <a name="conclusion"></a>Conclusion:
 [[Back to top](#top)]
 
-Reiterate explore findings, statistical analysis, and modeling take-a-ways
+- Polynomial Regression (Quadratic) Model with specified features from outperformed baseline and did better than the other models:
+    - RMSE: 0.160752
+- However, the R2 value indicates that this model is not a good fit
+    - R<sup>2</sup> value: -3.9362 x 10<sup>-4</sup>
+- Despite a good predictor of log error is there
+- With more time:
+    - Would like to explore 3-D clustering by adding latitude or acres
+    - More time to explore less common features like a/c unit type and fireplaces
+    - Would like to get more time to fill out the missing data so that there are even more data points to work with
 
-What could be done to improve the model?
-What would you do with more time? 
 
-Anything else of note worth adding? Add it here.
+- Our goal of identifying the drivers for errors in Zestimates by incorporating clustering methodologies helped, but not by much.
 
