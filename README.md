@@ -707,16 +707,19 @@ print("RMSE for Quadratic Model\nOut-of-Sample Performance: ", round(rmse_test, 
 ## <a name="conclusion"></a>Conclusion:
 [[Back to top](#top)]
 
-- Polynomial Regression (Quadratic) Model with specified features from outperformed baseline and did better than the other models:
+- Polynomial Regression (Quadratic) Model with specified features outperformed baseline and did better than the other models:
     - RMSE: 0.160752
-- However, the R2 value indicates that this model is not a good fit
-    - R<sup>2</sup> value: -3.9362 x 10<sup>-4</sup>
-- Despite a good predictor of log error is there
-- With more time:
-    - Would like to explore 3-D clustering by adding latitude or acres
-    - More time to explore less common features like a/c unit type and fireplaces
-    - Would like to get more time to fill out the missing data so that there are even more data points to work with
-
-
+    
+    
+- However, the R<sup>2</sup> value indicates that this model is not a good fit
+    - R<sup>2</sup> value: -3.936171 x 10<sup>-04</sup>
+    
+    
 - Our goal of identifying the drivers for errors in Zestimates by incorporating clustering methodologies helped, but not by much.
+
+- With more time:
+    - would like to find if there are better predictors of log error.
+    - would like to explore 3-D clustering by adding latitude or acres.
+    - explore less common features like a/c unit type and fireplaces.
+    - would like to fill out the missing data so that there are even more data points to work with.
 
