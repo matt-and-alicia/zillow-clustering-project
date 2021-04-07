@@ -1,6 +1,9 @@
 # <a name="top"></a>Zillow: Predicting the Error 
 ## README.md
 ![](http://zillow.mediaroom.com/image/Zillow_Wordmark_Blue_RGB.jpg)
+
+by: Alicia Gonzalez and Matthew Dalton
+
 <p>
   <a href="https://github.com/mdalton87" target="_blank">
     <img alt="Matthew" src="https://img.shields.io/github/followers/mdalton87?label=Follow_Matt&style=social" />
@@ -17,7 +20,6 @@
 </p>
 
 
-by: Alicia Gonzalez and Matthew Dalton
 ***
 [[Project Description](#project_description)]
 [[Project Planning](#planning)]
