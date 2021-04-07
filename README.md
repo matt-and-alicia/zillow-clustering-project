@@ -1,5 +1,6 @@
 # <a name="top"></a>Zillow: Predicting the Error 
 ## README.md
+![](http://zillow.mediaroom.com/image/Zillow_Wordmark_Blue_RGB.jpg)
 <p>
   <a href="https://github.com/mdalton87" target="_blank">
     <img alt="Matthew" src="https://img.shields.io/github/followers/mdalton87?label=Follow_Matt&style=social" />
@@ -15,7 +16,6 @@
   </a>
 </p>
 
-![](http://zillow.mediaroom.com/image/Zillow_Wordmark_Blue_RGB.jpg)
 
 by: Alicia Gonzalez and Matthew Dalton
 ***
@@ -76,10 +76,9 @@ This notebook consists of discoveries made and work that was done related to unc
         
 ### Hypothesis
 
-- Is log error  significantly different for properties in LA County vs Orange County vs Ventura County?
 - Is there a correlation between square footage of a home and log error?
 - Is there a relationship between tax value and log error?
-- Could there be clusters in square footage and county location that can help predict log error? 
+- Could there be clusters in age, acres, or location that can help predict log error? 
 
 ### Target variable
 
